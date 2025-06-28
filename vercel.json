@@ -52,10 +52,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "src/**/*.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 } 
