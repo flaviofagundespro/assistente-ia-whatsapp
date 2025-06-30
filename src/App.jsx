@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { CheckCircle, Clock, MessageCircle, Users, Zap, Heart, Scale, Calendar, Phone, Mail } from 'lucide-react'
-import GoogleAnalytics from './components/GoogleAnalytics.jsx'
 import './App.css'
 
 // Import das imagens
@@ -140,11 +139,15 @@ function App() {
     }
   ]
 
+  const whatsappNumber = "5551991892501";
+  const typebotLink = "https://chat.webmarketing360.com.br/my-typebot-ddnjfj5";
+
+  const getWhatsappLink = (message) => {
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
-      {/* Google Analytics */}
-      <GoogleAnalytics measurementId="GA_MEASUREMENT_ID" />
-      
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,7 +162,7 @@ function App() {
               <a href="#pricing" className="text-gray-600 hover:text-green-600 transition-colors">Preços</a>
               <a href="#contact" className="text-gray-600 hover:text-green-600 transition-colors">Contato</a>
             </nav>
-            <Button className="bg-green-600 hover:bg-green-700">
+            <Button className="bg-green-600 hover:bg-green-700" onClick={() => window.open(getWhatsappLink('Olá! Gostaria de agendar uma demonstração do Assistente de IA para WhatsApp.'), '_blank')}>
               Agendar Demonstração
             </Button>
           </div>
@@ -183,11 +186,11 @@ function App() {
                 enquanto a IA acolhe leads, gerencia agendamentos e tira dúvidas, garantindo um atendimento 24/7, eficiente e personalizado.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700" onClick={() => window.open(getWhatsappLink('Desejo agendar a minha consultoria gratuita.'), '_blank')}>
                   <Calendar className="mr-2 h-5 w-5" />
                   Agendar Demonstração Gratuita
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={() => window.open(getWhatsappLink('Olá! Gostaria de falar com um especialista sobre o Assistente de IA para WhatsApp.'), '_blank')}>
                   <Phone className="mr-2 h-5 w-5" />
                   Falar com Especialista
                 </Button>
@@ -308,7 +311,7 @@ function App() {
                     'Advogados aumentam em 40% a qualificação de leads com nossa triagem inteligente.'
                   }
                 </p>
-                <Button className="bg-green-600 hover:bg-green-700">
+                <Button className="bg-green-600 hover:bg-green-700" onClick={() => window.open(typebotLink, '_blank')}>
                   Ver Demonstração
                 </Button>
               </div>
@@ -374,36 +377,122 @@ function App() {
                 )}
                 <CardHeader className={plan.highlight ? 'pt-12 text-center' : 'text-center'}>
                   <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                  <div className="mt-4">
+                    <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+                    <span className="text-gray-600">/mês</span>
+                  </div>
+                  <CardDescription className="mt-2">
+                    {plan.description}
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-gray-900 mb-2">{plan.price}</p>
-                    <p className="text-gray-600">{plan.description}</p>
-                  </div>
-                  <div className="mt-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Recursos</h3>
-                    <div className="space-y-4">
-                      {plan.features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <CheckCircle className="h-6 w-6 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700">{feature}</span>
-                        </div>
-                      ))}
+                <CardContent className="space-y-4">
+                  {plan.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                      <span>{feature}</span>
                     </div>
-                  </div>
-                  <div className="mt-6">
-                    <Button className="w-full bg-green-600 hover:bg-green-700">
-                      Comprar
-                    </Button>
-                  </div>
+                  ))}
+                  <Button className="w-full bg-green-600 hover:bg-green-700 mt-6" onClick={() => window.open(getWhatsappLink(`Olá! Tenho interesse no plano ${plan.name} do Assistente de IA para WhatsApp.`), '_blank')}>
+                    Começar Agora
+                  </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Perguntas Frequentes
+            </h2>
+          </div>
+          
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+            Transforme seu Atendimento Agora!
+          </h2>
+          <p className="text-xl mb-8 opacity-90">
+            Agende sua demonstração gratuita e veja o Assistente de IA em ação.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100" onClick={() => window.open(getWhatsappLink('Desejo agendar a minha consultoria gratuita.'), '_blank')}>
+              <Calendar className="mr-2 h-5 w-5" />
+              Agendar Demonstração
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600" onClick={() => window.open(getWhatsappLink('Olá! Gostaria de falar com um especialista sobre o Assistente de IA para WhatsApp.'), '_blank')}>
+              <Phone className="mr-2 h-5 w-5" />
+              Falar com Especialista
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <MessageCircle className="h-8 w-8 text-green-600" />
+                <span className="text-xl font-bold">IA WhatsApp Pro</span>
+              </div>
+              <p className="text-gray-400">
+                Otimize seu tempo e humanize seu atendimento com nossa solução de IA para WhatsApp.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Contato</h3>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-400">(51) 99189-2501</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-400">contato@webmarketing360.com.br</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Links Úteis</h3>
+              <div className="space-y-2">
+                <a href="#features" className="block text-gray-400 hover:text-white transition-colors">Recursos</a>
+                <a href="#benefits" className="block text-gray-400 hover:text-white transition-colors">Benefícios</a>
+                <a href="#pricing" className="block text-gray-400 hover:text-white transition-colors">Preços</a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-400">
+              © 2025 IA WhatsApp Pro. Todos os direitos reservados.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
-}
+} 
 
 export default App
+
