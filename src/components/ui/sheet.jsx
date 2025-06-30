@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
-import { XIcon } from "lucide-react"
+import { cva } from "class-variance-authority"
+import XIcon from "lucide-react/dist/esm/icons/x"
 
 import { cn } from "@/lib/utils"
 
